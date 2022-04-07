@@ -25,10 +25,30 @@ let weatherSearch = {
         document.querySelector('.temp').innerText = "Temp: " + temp + " ℉";
         document.querySelector('.wind').innerText = "Wind: " + speed + " MPH";
         document.querySelector('.hum').innerText = "Humidity: " + humidity + " %";
+        const lat= data.coord.lat
+        const lon = data.coord.lon
+        this.uvdata(lat,lon)
+    },
+    uvdata:function(lat,lon){
+        fetch(
+            "https://api.openweathermap.org/data/2.5/onecall?lat="
+            + lat
+            + "&lon="
+            + lon
+            + "&exclude=hourly,minutely&appid=a4f68e66624f545f19a69eefc5107917"
+        )
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                document.querySelector('.uv').innerText = "UV Index: " + data.current.uvi;
+            })
     },
     userInput: function () {
         this.fetchWeather(document.querySelector('.user-input').value);
         this.fetchWeatherForecast(document.querySelector('.user-input').value);
+        let previousHistory = JSON.parse(localStorage.getItem("WeatherDashboard")) || []
+        previousHistory.push(document.querySelector('.user-input').value);
+        localStorage.setItem("WeatherDashboard",JSON.stringify(previousHistory));
     },
     fetchWeatherForecast: function (city) {
         fetch(
@@ -59,14 +79,15 @@ let weatherSearch = {
               <p class="card-text">Wind: ${speed} " MPH"</p>
             </div>
           </div>`
-            // let forecast = document.createElement('li').innerText = "Temp: "+ temp + " ℉";
-            // weatherList.append(forecast);
             weatherList.innerHTML =forecastHTML;
         }
     },
 }
 searchButton.addEventListener('click', function () {
     weatherSearch.userInput();
-    // weatherForecastSearch.userInputTwo();
 })
 
+
+
+// function localStorage() {
+// }

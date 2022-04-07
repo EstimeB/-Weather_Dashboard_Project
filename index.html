@@ -11,23 +11,26 @@
 </head>
 
 <body>
-    <header>Weather Dashboard</header>
+    <header class="bg-success text-white "><h1>Weather Dashboard</h1></header>
     <main>
-        <div class="search-card">Search for a City:</div>
-        <div class="search-container">
+        <div class="search-card"></div>
+        <div class="search-container container border border-success">
+            <h2>Search for a City:</h2>
             <input class="user-input"></input>
-            <button class="search-button">Search</button>
+            <button class="search-button btn btn-secondary">Search</button>
         </div>
         <!-- Search-results -->
-        <div class="current-day-forecast">
-            <h3 class="city-name">Name</h3>
+        <div class="current-day-forecast container bg-secondary">
+            <h3 class="city-name"></h3>
             <img src="" alt="" class="icon">
             <div class="temp"></div>
             <div class="wind"></div>
             <div class="hum"></div>
+            <div class="uv"></div>
         </div>
-        <div class="weather-list-container">
-            <div class="5-day-forcast">5-Day Forecast:</div>
+        <div class="weather-list-container container">
+            <div class="5-day-forcast"></div>
+            <h2>5-Day Forecast:</h2>
             <div class="weather-list  d-flex bg-primary "></div>
         </div>
     </main>
