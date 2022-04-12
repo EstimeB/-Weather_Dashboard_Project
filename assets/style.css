@@ -41,7 +41,7 @@ header h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 280px;
+    height: 190px;
     gap: 15px;
     justify-content: flex-start;
     /* background-color: rgb(25, 39, 54); */

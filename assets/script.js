@@ -21,7 +21,7 @@ let weatherSearch = {
         const { humidity } = data.main;
         console.log(name, temp, icon, speed, humidity);
         document.querySelector('.city-name').innerText = name;
-        document.querySelector('.date').append(currentDay.format('D/M/YYYY'));
+        document.querySelector('.date').append(currentDay.format(' (D/M/YYYY)'));
         document.querySelector('.icon').src = "https://openweathermap.org/img/wn/" + icon + ".png";
         document.querySelector('.temp').innerText = "Temp: " + temp + " ℉";
         document.querySelector('.wind').innerText = "Wind: " + speed + " MPH";
@@ -65,21 +65,25 @@ let weatherSearch = {
         console.log(data)
         let values = data.list;
         let forecastHTML = "";
-        for (i = 0; i <= 5; i++) {
-            const day = currentDay.add(1, 'days');
-            const dt = day.format('D/M/YYYY');
-            forecastHTML += `<p class="dt">${dt}</p>`
-            console.log(forecastHTML);
-        }
+        // for (i = 0; i <= 5; i++) {
+        //     const day = currentDay.add(1, 'days');
+        //     const dt = day.format('D/M/YYYY');
+        //     forecastHTML += `<p class="dt">${dt}</p>`
+        //     console.log(forecastHTML);
+        // }
         for (i = 0; i < values.length; i = i + 8) {
             console.log(values[i]);
             // add The date
+            const day = currentDay.add(1, 'days');
+            const dt = day.format('D/M/YYYY');
+
             const { icon } = values[i].weather[0];
             const { temp } = values[i].main;
             const { speed } = values[i].wind;
             const { humidity } = values[i].main;
             forecastHTML += `<div class="card" style="width: 18rem;">
             <div class="card-body">
+              <h4 class="dt">${dt}</h4>
               <img src="https://openweathermap.org/img/wn/${icon}.png" alt="...">
               <p class="card-text">Temp : ${temp} ℉</p>
               <p class="Card-text">Humiditiy: ${humidity} %</p>
