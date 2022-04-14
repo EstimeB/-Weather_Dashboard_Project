@@ -53,7 +53,14 @@ header h1 {
 .search-list {
     display: flex;
     flex-flow: row;
+    text-align: center;
+    gap: 20px;
+    font-size: 25px;
+    /* background-color: gray; */
 }
+/* .search-hist {
+    width: 250px;
+} */
 
 @media screen and (max-width: 1050px) {
     aside, main {
