@@ -50,6 +50,10 @@ header h1 {
 .search-container {
     border-bottom: solid;
 }
+.search-list {
+    display: flex;
+    flex-flow: row;
+}
 
 @media screen and (max-width: 1050px) {
     aside, main {

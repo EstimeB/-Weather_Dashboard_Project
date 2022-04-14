@@ -2,6 +2,7 @@ let currentDay = moment();
 // Fetching html elements
 const searchButton = document.querySelector('.search-button');
 const weatherList = document.querySelector('.weather-list');
+const input = document.querySelector('.user-input');
 
 let weatherSearch = {
     fetchWeather: function (city) {
@@ -19,7 +20,6 @@ let weatherSearch = {
         const { temp } = data.main;
         const { speed } = data.wind;
         const { humidity } = data.main;
-        console.log(name, temp, icon, speed, humidity);
         document.querySelector('.city-name').innerText = name;
         document.querySelector('.date').append(currentDay.format(' (D/M/YYYY)'));
         document.querySelector('.icon').src = "https://openweathermap.org/img/wn/" + icon + ".png";
@@ -41,16 +41,18 @@ let weatherSearch = {
         )
             .then(response => response.json())
             .then(data => {
-                console.log(data);
                 document.querySelector('.uv').innerText = "UV Index: " + data.current.uvi;
             })
     },
     userInput: function () {
-        this.fetchWeather(document.querySelector('.user-input').value);
-        this.fetchWeatherForecast(document.querySelector('.user-input').value);
-        let previousHistory = JSON.parse(localStorage.getItem("WeatherDashboard")) || []
-        previousHistory.push(document.querySelector('.user-input').value);
-        localStorage.setItem("WeatherDashboard", JSON.stringify(previousHistory));
+        // this.fetchWeather(document.querySelector('.user-input').value);
+        this.fetchWeather(input.value);
+        // this.fetchWeatherForecast(document.querySelector('.user-input').value);
+        this.fetchWeatherForecast(input.value);
+        // let previousHistory = localStorage.getItem("weatherSearch") || []
+        // previousHistory.push(document.querySelector('.user-input').value);
+        // localStorage.setItem("weatherSearch", previousHistory);
+        // renderSearchHistory();
     },
     fetchWeatherForecast: function (city) {
         fetch(
@@ -62,18 +64,15 @@ let weatherSearch = {
             .then(data => this.weatherForecastDisplay(data))
     },
     weatherForecastDisplay: function (data) {
-        console.log(data)
         let values = data.list;
         let forecastHTML = "";
         // for (i = 0; i <= 5; i++) {
         //     const day = currentDay.add(1, 'days');
         //     const dt = day.format('D/M/YYYY');
         //     forecastHTML += `<p class="dt">${dt}</p>`
-        //     console.log(forecastHTML);
         // }
         for (i = 0; i < values.length; i = i + 8) {
-            console.log(values[i]);
-            // add The date
+            // Date
             const day = currentDay.add(1, 'days');
             const dt = day.format('D/M/YYYY');
 
@@ -96,11 +95,26 @@ let weatherSearch = {
 }
 searchButton.addEventListener('click', function () {
     weatherSearch.userInput();
-    // localStorage();
+    renderSearchHistory();
 })
 
+// Fetching html elements
+const searchList = document.querySelector('.search-list');
 
-// function localStorage() {
-//     const lastInput = localStorage.getItem(userInput);
-//     userInputSpan.textContent = lastInput;
-// }
+function renderSearchHistory() {
+    let key = input.value;
+    let value = weatherSearch.value;
+    
+
+    localStorage.setItem(key, value);
+
+    let searchHistory = localStorage.getItem(key);
+
+    // console.log(searchHistory);
+
+    for (let i = 0; i < localStorage.length; i++) {
+        let storedValue = localStorage.key(i);
+
+        searchList.innerHTML += `${storedValue}<br>`;
+    }
+}
